@@ -1,0 +1,4 @@
+check process kafka-s3-consumer with pidfile <%= @pid_file %>
+  start program = "/usr/local/kafka-s3-consumer-<%= @application_name %>-daemon start"
+  stop program  = "/usr/local/kafka-s3-consumer-<%= @application_name %>-daemon stop"
+

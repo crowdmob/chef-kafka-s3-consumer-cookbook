@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case $1 in
+  start)
+     echo $$ > <%= @pid_file %>;
+     /usr/local/kafka-s3-consumer -c <%= @config_file %> 1><%= @output_file %>
+     ;;
+   stop)  
+     /usr/bin/pkill -2 -F <%= @pid_file %> ;;
+   *)  
+     echo "usage: kafka-s3-consumer-<%= @application_name %>-daemon {start|stop}" ;;
+esac
+exit 0

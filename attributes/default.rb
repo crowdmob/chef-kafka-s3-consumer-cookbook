@@ -1,0 +1,1 @@
+include_attribute "kafka-s3-consumer::install"

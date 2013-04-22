@@ -1,0 +1,19 @@
+[default]
+debug=<%= @application_settings[:debug] %>
+filebufferpath=<%= @application_settings[:filebufferpath] %>
+maxchunksizebytes=<%= @application_settings[:maxchunksizebytes] %>
+maxchunkagemins=<%= @application_settings[:maxchunkagemins] %>
+pollsleepmillis=<%= @application_settings[:pollsleepmillis] %>
+
+[kafka]
+host=127.0.0.1
+port=<%= @kafka_settings[:port] %>
+maxmessagesize=<%= @kafka_maxmessagesize %>
+topics=<%= @kafka_topic_array.join(',') %>
+partitions=<%= @kafka_topic_array.map{ |_| @kafka_partition }.join(',') %>
+
+[s3]
+bucket=<%= @application_settings[:s3bucket] %>
+region=<%= @env_vars['AWS_REGION'] %>
+accesskey=<%= @env_vars['AWS_ACCESS_KEY_ID'] %>
+secretkey=<%= @env_vars['AWS_SECRET_ACCESS_KEY'] %>

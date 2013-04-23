@@ -8,7 +8,14 @@ default[:kafka_s3_consumer][:_application_defaults][:filebufferpath_base] = "/mn
 default[:kafka_s3_consumer][:_application_defaults][:pollsleepmillis] = 10
 
 node[:deploy].each do |application, _|
-  default[:kafka_s3_consumer][application][:env] = {"HOME" => node[:deploy][application][:environment]["HOME"]}.merge(node[:deploy][application][:env])
+  if node[:deploy][application][:environment]["HOME"] && node[:deploy][application][:env]
+    default[:kafka_s3_consumer][application][:env] = {"HOME" => node[:deploy][application][:environment]["HOME"]}.merge(node[:deploy][application][:env])
+  elsif node[:deploy][application][:environment]["HOME"]
+    default[:kafka_s3_consumer][application][:env] = {"HOME" => node[:deploy][application][:environment]["HOME"]}
+  elsif node[:deploy][application][:env]
+    default[:kafka_s3_consumer][application][:env] = node[:deploy][application][:env]
+  end
+
   default[:kafka_s3_consumer][application][:restart_command] = "monit restart kafka_s3_consumer_#{application}"
   default[:kafka_s3_consumer][application][:stop_command] = "monit stop kafka_s3_consumer_#{application}"
   default[:kafka_s3_consumer][application][:debug] = node[:kafka_s3_consumer][:_application_defaults][:debug]
